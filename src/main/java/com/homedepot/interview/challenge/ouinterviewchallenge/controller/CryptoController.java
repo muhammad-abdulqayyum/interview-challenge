@@ -2,6 +2,7 @@ package com.homedepot.interview.challenge.ouinterviewchallenge.controller;
 
 import com.homedepot.interview.challenge.ouinterviewchallenge.entity.CryptoExchangeRate;
 import com.homedepot.interview.challenge.ouinterviewchallenge.service.CoincapService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,6 +27,14 @@ public class CryptoController {
 
         //TODO: Implement controller logic based on what is required.
 
-        return null;
+        try{
+            CryptoExchangeRate exchangeRate =  coincapService.getCryptoExchangeRate(fromAmount,fromToken,toToken);
+            ResponseEntity<CryptoExchangeRate> response = new ResponseEntity<>(exchangeRate ,HttpStatus.OK);
+            return response;
+        } catch (Exception e) {
+            ResponseEntity<CryptoExchangeRate> response = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return response;
+        }
+
     }
 }

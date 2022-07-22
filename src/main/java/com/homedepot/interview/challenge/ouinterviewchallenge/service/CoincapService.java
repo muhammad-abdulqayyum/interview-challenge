@@ -35,7 +35,37 @@ public class CoincapService {
 
         // TODO: Implement the necessary logic and calls to
         //  Coincap that might be needed to satisfy requirements.
-        return null;
+
+
+
+        CoincapAsset fromAsset = findTokenFromSymbol(from);
+        CoincapAsset toAsset = findTokenFromSymbol(to);
+
+        String fromPriceString = fromAsset.getPriceUsd();
+        String toPriceString = toAsset.getPriceUsd();
+
+
+
+        Double fromPrice = Double.parseDouble(fromPriceString);
+        Double toPrice = Double.parseDouble(toPriceString);
+
+        Double conversionRate = fromPrice / toPrice;
+
+        Double fromAmount = input; // FROM Amount
+        Double toAmount = input * conversionRate;
+
+
+
+
+
+       CryptoExchangeRate exchangeRate = CryptoExchangeRate.builder()
+               .fromAmount(fromAmount)
+               .toAmount(toAmount)
+               .fromToken(fromAsset.getSymbol())
+               .toToken(toAsset.getSymbol())
+               .build();
+
+        return exchangeRate;
     }
 
 
